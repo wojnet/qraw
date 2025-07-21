@@ -1,12 +1,12 @@
 "use client"
 import { cn } from "@/app/utils/cn";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 
 interface IBrailleLoader {
   className?: string,
 }
 
-const BrailleLoader = ({ className }: IBrailleLoader) => {
+const BrailleLoader: FC<IBrailleLoader> = ({ className }: IBrailleLoader) => {
   const brailleSymbols = ["⠷", "⠯", "⠟", "⠻", "⠽", "⠾"];
   const [brailleSymbolIndex, setBrailleSymbolIndex] = useState<number>(0);
 
