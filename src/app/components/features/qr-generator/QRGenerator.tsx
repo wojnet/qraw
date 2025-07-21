@@ -25,7 +25,7 @@ const QRGenerator = (): JSX.Element => {
     setTimeout(() => {
       setURLString("");
       setIsURLInputDisabled(false);
-    }, 2000 + URL.length * interval);
+    }, 2000 + URL.length * interval + 10);
   };
 
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -61,9 +61,15 @@ const QRGenerator = (): JSX.Element => {
   }, []);
 
   return (
-    <div className="w-96 h-auto flex flex-col items-center gap-10 my-10">
+    <div className="w-96 h-auto flex flex-col items-center gap-10 mt-14">
       <div className="w-full flex flex-col items-center gap-5">
-        <h1 className="text-3xl font-bold text-[#222]">QRGenerator</h1>
+        <h1 className="text-4xl font-bold text-[#222]">
+          <span className="text-blue-600">Q</span>
+          RGenerator
+        </h1>
+        <p className="text-neutral-500 mb-14 italic">
+          The best free QR code generation tool
+        </p>
         <div className="w-full h-9 flex gap-3">
           <div className="w-56 h-9 flex items-center justify-between grow shrink-0 border border-[#444] rounded-lg shadow-[1px_1px_0_#444] px-[6px]">
             <input
@@ -93,17 +99,16 @@ const QRGenerator = (): JSX.Element => {
             }
           </div>
           <button
-            className="w-12 h-full bg-neutral-200 border border-[#444] rounded-lg shadow-[1px_1px_0_#444,_1px_1px_1px_white_inset] px-[6px] cursor-pointer hover:translate-[1px] hover:shadow-[1px_1px_1px_white_inset] font-bold"
+            className="w-12 h-full bg-neutral-200 border border-[#444] rounded-lg shadow-[1px_1px_0_#444,_1px_1px_1px_white_inset] px-[6px] cursor-pointer hover:translate-[1px] hover:shadow-[1px_1px_1px_white_inset] disabled:translate-[1px] disabled:shadow-[1px_1px_1px_white_inset] font-bold"
             onClick={() => generateQRCode(URLString)}
             disabled={isURLInputDisabled}
           >
-            { !isURLInputDisabled && "GET" }
-            { isURLInputDisabled && <BrailleLoader className="text-lg" /> }
+            GET
           </button>
         </div>
       </div>
       <div className="w-full h-full flex justify-center items-center">
-        <div className="w-full aspect-square border border-[#444] rounded-xl shadow-[1px_1px_0_#444]"></div>
+        {/* <div className="w-full aspect-square border border-[#444] rounded-xl shadow-[1px_1px_0_#444]"></div> */}
       </div>
     </div>
   )
