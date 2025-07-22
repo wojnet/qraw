@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import QRGenerator from '../components/features/qr-generator/QRGenerator';
+import QRGenerator from '@components/features/qr-generator/QRGenerator';
 
 interface pageProps {
   

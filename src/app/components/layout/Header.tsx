@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { JSX } from 'react';
-import NavigationMenu from '../ui/navigation/NavigationMenu';
-import MainLogo from '../ui/logos/MainLogo';
-import MockProfilePicture from '../ui/mock/MockProfilePicture';
-import NavigationItem from '../ui/navigation/NavigationItem';
-import NavigationDropdownItem from '../ui/navigation/NavigationDropdownItem';
-import NavigationSubItem from '../ui/navigation/NavigationSubItem';
-import NavigationSubItemDivider from '../ui/navigation/NavigationSubItemDivider';
+import NavigationMenu from '@components/ui/navigation/NavigationMenu';
+import MainLogo from '@components/ui/logos/MainLogo';
+import MockProfilePicture from '@components/ui/mock/MockProfilePicture';
+import NavigationItem from '@components/ui/navigation/NavigationItem';
+import NavigationDropdownItem from '@components/ui/navigation/NavigationDropdownItem';
+import NavigationSubItem from '@components/ui/navigation/NavigationSubItem';
+import NavigationSubItemDivider from '@components/ui/navigation/NavigationSubItemDivider';
 
 const Header = (): JSX.Element => {
   return (
