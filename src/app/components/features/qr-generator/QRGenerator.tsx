@@ -1,31 +1,32 @@
 "use client"
 import { ChangeEventHandler, JSX, KeyboardEventHandler, useEffect, useRef, useState } from "react";
-import BrailleLoader from "../../ui/loaders/BrailleLoader";
+import BrailleLoader from "@components/ui/loaders/BrailleLoader";
+import { generateQRCode } from "@actions/generateQRCode";
+import { downloadImageFromURL } from "@utils/downloadImage";
 
 const QRGenerator = (): JSX.Element => {
   const URLInputRef = useRef<HTMLInputElement>(null);
   const [URLString, setURLString] = useState<string>("");
+  const [lastURLString, setLastURLString] = useState<string>("");
   const [isURLInputDisabled, setIsURLInputDisabled] = useState<boolean>(false);
   const [isURLInputFocused, setIsURLInputFocused] = useState<boolean>(false);
+  const [QRImageURL, setQRImageURL] = useState<string | null>(null);
 
-  const generateQRCode = (URL: string) => {
+  const processURLAndGenerateQR = async () => {
     setIsURLInputDisabled(true);
-    setURLString(URL);
+    setLastURLString(URLString);
 
-    const interval = 1000 / URL.length;
-
-    setTimeout(() => {
-      for (let i = 0; i < URL.length; i++) {
-        setTimeout(() => {
-          setURLString(prev => prev.slice(0, -2) + "|");
-        }, i * interval);
+    const QRData: string = await generateQRCode(
+      URLString,
+      {
+        margin: 0,
+        errorCorrectionLevel: "H",
       }
-    }, 2000);
-
-    setTimeout(() => {
-      setURLString("");
-      setIsURLInputDisabled(false);
-    }, 2000 + URL.length * interval + 10);
+    );
+    setQRImageURL(`data:image/png;base64,${QRData}`);
+    
+    setURLString("");
+    setIsURLInputDisabled(false);
   };
 
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -34,7 +35,7 @@ const QRGenerator = (): JSX.Element => {
 
   const onInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
     if (event.key === "Enter") {
-      generateQRCode(URLString);
+      processURLAndGenerateQR();
     }
 
     if (event.key === "Escape") {
@@ -70,7 +71,7 @@ const QRGenerator = (): JSX.Element => {
         <p className="text-neutral-500 mb-14 italic">
           The best free QR code generation tool
         </p>
-        <div className="w-full h-9 flex gap-3">
+        <div className="w-full h-9 flex gap-3 mb-5">
           <div className="w-56 h-9 flex items-center justify-between grow shrink-0 border border-[#444] rounded-lg shadow-[1px_1px_0_#444] px-[6px]">
             <input
               type="text"
@@ -84,7 +85,7 @@ const QRGenerator = (): JSX.Element => {
             />
             { isURLInputFocused &&
               <code
-                onClick={() => generateQRCode(URLString)}
+                onClick={processURLAndGenerateQR}
                 className="w-6 h-6 bg-gray-200 flex justify-center border border-gray-400 cursor-pointer px-1 rounded"
               >
                 &crarr;
@@ -99,8 +100,8 @@ const QRGenerator = (): JSX.Element => {
             }
           </div>
           <button
-            className="w-12 h-full bg-neutral-200 border border-[#444] rounded-lg shadow-[1px_1px_0_#444,_1px_1px_1px_white_inset] px-[6px] cursor-pointer hover:translate-[1px] hover:shadow-[1px_1px_1px_white_inset] disabled:translate-[1px] disabled:shadow-[1px_1px_1px_white_inset] font-bold"
-            onClick={() => generateQRCode(URLString)}
+            className="h-full bg-neutral-100 border border-[#444] rounded-lg shadow-[1px_1px_0_#444,_1px_1px_1px_white_inset] px-3 cursor-pointer hover:translate-[1px] hover:shadow-[1px_1px_1px_white_inset] disabled:translate-[1px] disabled:shadow-[1px_1px_1px_white_inset] font-bold"
+            onClick={processURLAndGenerateQR}
             disabled={isURLInputDisabled}
           >
             GET
@@ -108,7 +109,31 @@ const QRGenerator = (): JSX.Element => {
         </div>
       </div>
       <div className="w-full h-full flex justify-center items-center">
-        {/* <div className="w-full aspect-square border border-[#444] rounded-xl shadow-[1px_1px_0_#444]"></div> */}
+        { QRImageURL && 
+          <div className="w-full aspect-square flex flex-col justify-start items-center gap-5">
+            <section className="text-center">
+              <p>QR Code for</p>
+              <a
+                className="text-neutral-500 mb-14 italic"
+                href={lastURLString}
+                target="_blank"
+              >
+                {lastURLString}
+              </a>
+            </section>
+            <img
+              className="max-w-64 max-h-64 aspect-square w-full h-full image-rendering-crisp"
+              src={QRImageURL}
+              alt="QR code"
+            />
+            <button
+              className="h-9 bg-neutral-100 border border-[#444] rounded-lg shadow-[1px_1px_0_#444,_1px_1px_1px_white_inset] px-3 cursor-pointer hover:translate-[1px] hover:shadow-[1px_1px_1px_white_inset] disabled:translate-[1px] disabled:shadow-[1px_1px_1px_white_inset] font-bold"
+              onClick={() => downloadImageFromURL(QRImageURL, "qrcode.png")}
+            >
+              DOWNLOAD
+            </button>
+          </div>
+        }
       </div>
     </div>
   )
