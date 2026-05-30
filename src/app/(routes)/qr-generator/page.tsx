@@ -1,16 +1,21 @@
 import { FC } from 'react';
 import QRGenerator from '@components/features/qr-generator/QRGenerator';
+import DevtoolsToggle from '@/app/components/ui/devtools/DevtoolsToggle';
+import ReduxProvider from '@/lib/redux/ReduxProvider';
 
-interface pageProps {
+interface qrGeneratorPageProps {
   
 }
 
-const page: FC<pageProps> = ({}) => {
+const qrGeneratorPage: FC<qrGeneratorPageProps> = ({}) => {
   return (
-    <div className="w-full max-w-[1000px] mx-auto flex flex-col items-center px-10 mt-10">
-      <QRGenerator />
+    <div className="flex flex-col items-center">
+      <ReduxProvider>
+        <DevtoolsToggle />
+        <QRGenerator />
+      </ReduxProvider>
     </div>
   );
 }
 
-export default page;
+export default qrGeneratorPage;
