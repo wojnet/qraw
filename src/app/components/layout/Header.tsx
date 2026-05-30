@@ -1,27 +1,28 @@
+import Link from 'next/link';
 import { JSX } from 'react';
-import NavigationMenu from '@components/ui/navigation/NavigationMenu';
-import MainLogo from '@components/ui/logos/MainLogo';
-import MockProfilePicture from '@components/ui/mock/MockProfilePicture';
-import NavigationItem from '@components/ui/navigation/NavigationItem';
-import NavigationDropdownItem from '@components/ui/navigation/NavigationDropdownItem';
-import NavigationSubItem from '@components/ui/navigation/NavigationSubItem';
-import NavigationSubItemDivider from '@components/ui/navigation/NavigationSubItemDivider';
+import NavigationMenu from '../ui/navigation/NavigationMenu';
+import MainLogo from '../ui/logos/MainLogo';
+import MockProfilePicture from '../ui/mock/MockProfilePicture';
+import NavigationItem from '../ui/navigation/NavigationItem';
+import NavigationDropdownItem from '../ui/navigation/NavigationDropdownItem';
+import NavigationSubItem from '../ui/navigation/NavigationSubItem';
+import NavigationSubItemDivider from '../ui/navigation/NavigationSubItemDivider';
 
 const Header = (): JSX.Element => {
   return (
-    <header className="w-full h-auto flex flex-col items-center px-8 mb-10">
+    <header className="w-full h-auto flex flex-col items-center px-8">
       <div className="w-full h-24 flex items-center justify-center gap-4">
-        <div
+        <div 
           className="w-auto h-full flex justify-start items-end p-1 select-none"
         >
           <MainLogo/>
         </div>
-
+        
         <NavigationMenu className="h-full grow shrink-0 items-end justify-start text-lg hidden sm:flex">
           <NavigationDropdownItem label="Tools">
             <NavigationSubItem
               href="/qr-generator"
-              label="QR Generator"
+              label="QRGenerator"
             />
             <NavigationSubItemDivider />
             <NavigationSubItem
@@ -36,13 +37,14 @@ const Header = (): JSX.Element => {
           </NavigationDropdownItem>
           <NavigationItem
             label="About"
-            href="/about"
+            href="/"
           />
           <NavigationItem
             label="Plans"
             href="/"
           />
         </NavigationMenu>
+        
         <div className="h-full sm:flex justify-end items-end hidden">
           <div className="flex items-center gap-4">
             <MockProfilePicture />
