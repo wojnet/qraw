@@ -1,6 +1,6 @@
-enum ValidationMessages {
+export enum ValidationMessages {
   isValid = "isValid",
-  isNull = "isNull",
+  isEmpty = "isEmpty",
   isNotUrl = "isNotUrl",
   isTooLong = "isTooLong",
 }
@@ -13,13 +13,15 @@ export interface IValidationResponse {
 export const URL_LENGTH_LIMIT: number = 256;
 
 const validateUrl = (url: string): IValidationResponse => {
-  if (!url)
+  const preparedUrl = url.trim();
+
+  if (!preparedUrl)
     return {
       isUrlValid: false,
-      urlValidationMessage: ValidationMessages.isNull,
+      urlValidationMessage: ValidationMessages.isEmpty,
     }
 
-  if (url.length > URL_LENGTH_LIMIT) 
+  if (preparedUrl.length > URL_LENGTH_LIMIT) 
     return {
       isUrlValid: false,
       urlValidationMessage: ValidationMessages.isTooLong,
