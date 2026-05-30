@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import QRGenerator from "./components/features/qr-generator/QRGenerator";
+import QRGenerator from "@components/features/qr-generator/QRGenerator";
 
 const Home = (): JSX.Element => {
   return (

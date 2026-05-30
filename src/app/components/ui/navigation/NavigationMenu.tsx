@@ -1,5 +1,5 @@
 import { FC, ReactElement } from "react";
-import { cn } from "@/app/utils/cn";
+import { cn } from "@utils/cn";
 import NavigationItem from "./NavigationItem";
 
 interface INavigationMenu {

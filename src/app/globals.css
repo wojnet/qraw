@@ -1,15 +1,40 @@
 @import "tailwindcss";
 
+@layer utilities {
+  .image-rendering-crisp {
+    image-rendering: crisp-edges;
+  }
+  .image-rendering-pixelated {
+    image-rendering: pixelated;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  background: #FFF;
+  background: #fafafa;
   font-family: var(--font-rasa);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-chivo);
+}
+
+button {
+  font-family: var(--font-chivo);
+  letter-spacing: 0.04em;
+}
+
+::selection {
+  background-color: rgba(37, 99, 235, 0.15);
+  color: inherit;
 }
