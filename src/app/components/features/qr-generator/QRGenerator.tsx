@@ -94,6 +94,7 @@ const QRGenerator = (): JSX.Element => {
             </button>
           }
           <input
+            data-testid="qr-url-input"
             type="text"
             value={URLString}
             onChange={onInputChange}
