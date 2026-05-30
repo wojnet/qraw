@@ -1,10 +1,6 @@
 "use server"
 
-import QRCode, {
-  QRCodeOptions,
-  QRCodeToBufferOptions,
-  toFile as createQRCodeFile
-} from "qrcode";
+import QRCode, { QRCodeToBufferOptions } from "qrcode";
 
 const qr = require("qrcode");
 
