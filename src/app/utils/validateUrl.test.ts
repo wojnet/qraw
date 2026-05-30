@@ -3,13 +3,18 @@ import { ValidationMessages } from "./validateUrl";
 
 describe("validateUrl", () => {
   it("returns valid for correct URL", () => {
-    const resultHttps = validateUrl("https://example.com");
-    const resultHttp = validateUrl("http://example.com");
+    const URLs = [
+      "https://example.com",
+      "http://example.com",
+      "example.com",
+    ]
 
-    expect(resultHttps.isUrlValid).toBe(true);
-    expect(resultHttp.isUrlValid).toBe(true);
-    expect(resultHttps.urlValidationMessage).toBe(ValidationMessages.isValid);
-    expect(resultHttp.urlValidationMessage).toBe(ValidationMessages.isValid);
+    URLs.forEach(url => {
+      const result = validateUrl(url);
+
+      expect(result.isUrlValid).toBe(true);
+      expect(result.urlValidationMessage).toBe(ValidationMessages.isValid);
+    });
   });
 
   it("returns invalid for incorrect URLs", () => {
