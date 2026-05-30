@@ -8,9 +8,9 @@ interface INavigationItem {
 
 const NavigationItem: FC<INavigationItem> = ({ label, href = "/" }) => {
   return (
-    <Link
-      href={href}
-      className="p-3 rounded-md group select-none hover:bg-neutral-100 transition-colors duration-150"
+    <Link 
+      href={href} 
+      className="p-3 group select-none"
     >
       <span className="text-gray-800 group-hover:opacity-80 transition-opacity">
         {label}
