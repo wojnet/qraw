@@ -1,7 +1,8 @@
 "use client"
-import { FC, MouseEventHandler, ReactElement, useState } from 'react';
+import { FC, MouseEventHandler, ReactElement, useEffect, useState } from 'react';
 import { ChevronDown } from "react-feather";
 import NavigationSubItem from './NavigationSubItem';
+import { usePathname } from 'next/navigation';
 
 interface INavigationDropdownItem {
   label: string;
@@ -11,6 +12,8 @@ interface INavigationDropdownItem {
 const NavigationDropdownItem: FC<INavigationDropdownItem> = ({ label, children }) => {
   const [isMenuShown, setIsMenuShown] = useState<boolean>(false);
 
+  const pathname = usePathname();
+
   const onMouseOver: MouseEventHandler<HTMLDivElement> = (event) => {
     setIsMenuShown(true);
   }
@@ -18,6 +21,10 @@ const NavigationDropdownItem: FC<INavigationDropdownItem> = ({ label, children }
   const onMouseLeave: MouseEventHandler<HTMLDivElement> = (event) => {
     setIsMenuShown(false);
   }
+
+  useEffect(() => {
+    setIsMenuShown(false);
+  }, [pathname]);
 
   return (
     <div
