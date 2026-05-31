@@ -1,4 +1,4 @@
-import { cn } from "@utils/cn";
+import { cn } from "@/app/utils/cn";
 import Link from "next/link";
 import { FC } from "react";
 
@@ -10,7 +10,7 @@ const MainLogo: FC<IMainLogo>  = ({ className }) => {
   return (
     <Link
       className={cn("text-gray-900 text-5xl sm:text-4xl font-bold", className)}
-      href="/"
+      href="/" 
     >
       <h1 className="p-4 translate-y-[8px]">
         <span className="text-blue-600">

@@ -1,42 +1,31 @@
 "use client"
 import { ChangeEventHandler, JSX, KeyboardEventHandler, useEffect, useRef, useState } from "react";
-import { FileText } from "react-feather";
-import BrailleLoader from "@components/ui/loaders/BrailleLoader";
-import { generateQRCode } from "@actions/generateQRCode";
-import { downloadImageFromURL } from "@utils/downloadImage";
-import validateUrl from "@/app/utils/validateUrl";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/lib/redux/store";
+import BrailleLoader from "../../ui/loaders/BrailleLoader";
 
 const QRGenerator = (): JSX.Element => {
-  const dispatch = useDispatch<AppDispatch>();
-  const devtoolsEnabled = useSelector((state: RootState) => state.devtools.enabled);
-
   const URLInputRef = useRef<HTMLInputElement>(null);
   const [URLString, setURLString] = useState<string>("");
-  const [lastURLString, setLastURLString] = useState<string>("");
   const [isURLInputDisabled, setIsURLInputDisabled] = useState<boolean>(false);
   const [isURLInputFocused, setIsURLInputFocused] = useState<boolean>(false);
-  const [QRImageURL, setQRImageURL] = useState<string | null>(null);
 
-  const processURLAndGenerateQR = async () => {
-    const { isUrlValid, urlValidationMessage } = validateUrl(URLString);
-    if (!isUrlValid) return alert(urlValidationMessage);
-
+  const generateQRCode = (URL: string) => {
     setIsURLInputDisabled(true);
-    setLastURLString(URLString);
+    setURLString(URL);
 
-    const QRData: string = await generateQRCode(
-      URLString,
-      {
-        margin: 0,
-        errorCorrectionLevel: "H",
+    const interval = 1000 / URL.length;
+
+    setTimeout(() => {
+      for (let i = 0; i < URL.length; i++) {
+        setTimeout(() => {
+          setURLString(prev => prev.slice(0, -2) + "|");
+        }, i * interval);
       }
-    );
-    setQRImageURL(`data:image/png;base64,${QRData}`);
-    
-    setURLString("");
-    setIsURLInputDisabled(false);
+    }, 2000);
+
+    setTimeout(() => {
+      setURLString("");
+      setIsURLInputDisabled(false);
+    }, 2000 + URL.length * interval + 10);
   };
 
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -45,7 +34,7 @@ const QRGenerator = (): JSX.Element => {
 
   const onInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
     if (event.key === "Enter") {
-      processURLAndGenerateQR();
+      generateQRCode(URLString);
     }
 
     if (event.key === "Escape") {
@@ -72,13 +61,14 @@ const QRGenerator = (): JSX.Element => {
   }, []);
 
   return (
-    <div className="w-full max-w-sm flex flex-col items-center gap-8 mt-10">
-      <div className="w-full flex flex-col items-center gap-3 text-center">
-        <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
-          <span className="text-blue-600">QR</span>Generator
+    <div className="w-96 h-auto flex flex-col items-center gap-10 mt-14">
+      <div className="w-full flex flex-col items-center gap-5">
+        <h1 className="text-4xl font-bold text-[#222]">
+          <span className="text-blue-600">Q</span>
+          RGenerator
         </h1>
-        <p className="text-neutral-400 text-sm">
-          Generate a QR code for any URL instantly
+        <p className="text-neutral-500 mb-14 italic">
+          The best free QR code generation tool
         </p>
       </div>
 

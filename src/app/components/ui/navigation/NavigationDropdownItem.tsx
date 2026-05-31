@@ -28,7 +28,7 @@ const NavigationDropdownItem: FC<INavigationDropdownItem> = ({ label, children }
 
   return (
     <div
-      className="p-3 rounded-md cursor-pointer select-none relative hover:bg-neutral-100 transition-colors duration-150"
+      className="p-3 cursor-pointer select-none relative"
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
     >
@@ -39,8 +39,8 @@ const NavigationDropdownItem: FC<INavigationDropdownItem> = ({ label, children }
         />
         {label}
       </span>
-      <div className={`transition-all duration-200 ${isMenuShown ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
-        <div className="min-w-52 bg-white flex flex-col items-stretch border border-neutral-100 shadow-lg left-0 top-[100%] absolute z-10 rounded-xl p-1.5">
+      <div className={`transition-all duration-300 ${isMenuShown ? "h-auto max-h-max opacity-100 scale-y-100" : "h-0 max-h-0 opacity-0 scale-y-70 pointer-events-none"}`}>
+        <div className="min-w-52 bg-white flex flex-col items-stretch shadow-md left-0 top-[calc(100%+10px)] absolute z-10 rounded-lg p-1">
           {children}
         </div>
       </div>
