@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import ReduxProvider from "@/lib/redux/ReduxProvider";
 import QRGenerator from "./QRGenerator";
+import ReduxProvider from "lib/redux/ReduxProvider";
 
 describe("QRGenerator", () => {
   it("renders QR generator heading", () => {
